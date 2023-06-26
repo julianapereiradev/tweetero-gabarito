@@ -16,10 +16,22 @@ const tweets  = []
 app.post("/sign-up", (req,res) => {
     const {username, avatar} = req.body
     users.push({username, avatar})
-    console.log('', users)
+    // console.log('Array de users aqui:', users)
     res.send("OK")
 })
 
+
+app.post("/tweets", (req, res) => {
+   const {username, tweet} = req.body
+   
+   //find => retorna undefined se não acha e se acha retorna o obj do usuário
+   const userExists = users.find((user) => user.username === username)
+
+   if(!userExists) return res.send("UNAUTHORIZED")
+
+   tweets.push({username, tweet})
+   res.send("OK")
+})
 
 // Ligar a aplicação do servidos para ouvir as requisições:
 const PORT = 5000
