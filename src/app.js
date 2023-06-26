@@ -33,6 +33,16 @@ app.post("/tweets", (req, res) => {
    res.send("OK")
 })
 
+
+app.get("/tweets", (req, res) => {
+    const completeTweets = tweets.map((tweet) => {
+        const user = users.find((user) => user.username === tweet.username)
+        return {...tweet, avatar: user.avatar}
+    })
+
+    res.send(completeTweets.slice(-10).reverse())
+})
+
 // Ligar a aplicação do servidos para ouvir as requisições:
 const PORT = 5000
 app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`))
