@@ -9,9 +9,15 @@ app.use(cors())
 app.use(express.json())
 
 
+const users = []
+const tweets  = []
+
 // Funções (endpoints):
-app.get("/teste", (req,res) => {
-    res.send("Funcionou!!")
+app.post("/sign-up", (req,res) => {
+    const {username, avatar} = req.body
+    users.push({username, avatar})
+    console.log('', users)
+    res.send("OK")
 })
 
 
