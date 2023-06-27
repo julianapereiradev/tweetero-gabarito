@@ -43,12 +43,26 @@ app.post("/tweets", (req, res) => {
 
 
 app.get("/tweets", (req, res) => {
+    const page = Number(req.query.page)
+
+    if(req.query.page && (isNaN(page) || page < 1) ) {
+        return res.status(400).send("Informe uma página válida!")
+    }
+
     const completeTweets = tweets.map((tweet) => {
         const user = users.find((user) => user.username === tweet.username)
         return {...tweet, avatar: user.avatar}
     })
 
-    res.send(completeTweets.slice(-10).reverse())
+    if (page) {
+        const limit = 10
+        const start = (page - 1) * limit
+        const end = page * limit
+
+        return res.send(completeTweets.slice(start, end))
+    }
+
+    res.send(completeTweets.slice(-10))
 })
 
 app.get("/tweets/:username", (req,res) => {
