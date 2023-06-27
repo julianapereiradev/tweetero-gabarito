@@ -16,13 +16,21 @@ const tweets  = []
 app.post("/sign-up", (req,res) => {
     const {username, avatar} = req.body
     users.push({username, avatar})
-    // console.log('Array de users aqui:', users)
+
+    if(!username || typeof username !== "string" || !avatar || typeof avatar !== "string") {
+        return res.status(400).send("Todos os campos são obrigatórios!")
+    }
+    users.push({username, avatar})
     res.send("OK")
 })
 
 
 app.post("/tweets", (req, res) => {
    const {username, tweet} = req.body
+
+   if(!username || typeof username !== "string" || !tweet || typeof tweet !== "string") {
+    return res.status(400).send("Todos os campos são obrigatórios!")
+}
    
    //find => retorna undefined se não acha e se acha retorna o obj do usuário
    const userExists = users.find((user) => user.username === username)
