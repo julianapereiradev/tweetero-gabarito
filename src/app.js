@@ -21,7 +21,7 @@ app.post("/sign-up", (req,res) => {
         return res.status(400).send("Todos os campos são obrigatórios!")
     }
     users.push({username, avatar})
-    res.send("OK")
+    res.status(201).send("OK")
 })
 
 
@@ -35,10 +35,10 @@ app.post("/tweets", (req, res) => {
    //find => retorna undefined se não acha e se acha retorna o obj do usuário
    const userExists = users.find((user) => user.username === username)
 
-   if(!userExists) return res.send("UNAUTHORIZED")
+   if(!userExists) return res.status(401).send("UNAUTHORIZED")
 
    tweets.push({username, tweet})
-   res.send("OK")
+   res.status(201).send("OK")
 })
 
 
